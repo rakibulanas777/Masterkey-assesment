@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [horizontalButton, setHorizontalButton] = useState([]);
@@ -73,6 +74,10 @@ const Home = () => {
                     </div>
                 ))}
             </div>
+
+            <Link to="/details" className="text-blue-500 hover:underline mt-4 block">
+                Generate Title
+            </Link>
         </div>
     );
 };
