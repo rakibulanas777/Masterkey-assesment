@@ -1,46 +1,55 @@
 import React, { useState } from 'react';
 
 const Home = () => {
+    const [horizontalButton, setHorizontalButton] = useState([]);
+    const [secondH, setSecondH] = useState(0);
 
-    const [buttonGroups, setButtonGroups] = useState([
-        [
-            {
-                id: 1,
-                name: "V",
-            },
-            {
-                id: 2,
-                name: "H",
-            }
-        ]
-    ]);
-
-    const handleClick = () => {
-        const newId = Math.max(...buttonGroups.flat().map(button => button.id)) + 1;
-        const newButtonGroups = [...buttonGroups];
-        newButtonGroups[newButtonGroups.length - 1].push({ id: newId, name: "V" });
-        newButtonGroups[newButtonGroups.length - 1].push({ id: newId + 1, name: "H" });
-
-        setButtonGroups(newButtonGroups);
+    const handleHorizontally = (id) => {
+        setHorizontalButton((prevHorizontalButton) => {
+            console.log('Previous state:', prevHorizontalButton);
+            return [...prevHorizontalButton, id];
+        });
     };
 
-    console.log(buttonGroups)
 
+
+
+
+    console.log(horizontalButton);
     return (
         <div className='container mx-auto px-10'>
-            {buttonGroups.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 gap-4">
-                    {row.map((button, buttonIndex) => (
-                        <button
-                            key={button.id}
-                            className={`py-3 px-6 ${button.name === "V" ? "bg-cyan-600 text-white" : "bg-gray-200 text-black"} font-semibold rounded-sm`}
-                            onClick={() => handleClick(button.name)}
-                        >
-                            {button.name}
-                        </button>
-                    ))}
+            <div className={`flex mx-auto items-center h-[80vh] flex-row ${horizontalButton.length !== 0 ? 'justify-between' : 'justify-center'}`}>
+                <div className="flex gap-4">
+                    <button
+                        className="py-3 px-6 bg-cyan-600 text-white font-semibold rounded-sm"
+                        onClick={() => handleVertically(1)}
+                    >
+                        V
+                    </button>
+                    <button
+                        className="py-3 px-6 bg-gray-200 text-black font-semibold rounded-sm"
+                        onClick={() => handleHorizontally(1)}
+                    >
+                        H
+                    </button>
                 </div>
-            ))}
+                {horizontalButton.map((id, index) => (
+                    <div key={index} className="flex gap-4">
+                        <button
+                            className={`py-3 px-6 bg-green-600 text-white font-semibold rounded-sm`}
+                            onClick={() => handleClick('V')}
+                        >
+                            V
+                        </button>
+                        <button
+                            className={`py-3 px-6 bg-gray-${200} text-black font-semibold rounded-sm`}
+                            onClick={() => handleHorizontally(id + 1)}
+                        >
+                            H
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
